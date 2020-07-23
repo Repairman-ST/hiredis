@@ -1,50 +1,70 @@
-## [1.0.0RC1](https://github.com/redis/hiredis/tree/1.0.0RC1) - DATE/TBD
+## [1.0.0-rc1](https://github.com/redis/hiredis/tree/1.0.0-rc1) - DATE/TBD
+
+Announcing Hiredis v1.0.0-rc1, which adds support for RESP3, SSL connections, allocator injection, and substantially improved Windows support! :tada:
+
+_A big thanks to everyone who helped with this release.  The following list includes everyone who contributed at least five lines, sorted by lines contributed._ :sparkling_heart:
+
+[Michael Grunder](https://github.com/michael-grunder), [Yossi Gottlieb](https://github.com/yossigo),
+[Mark Nunberg](https://github.com/mnunberg), [Marcus Geelnard](https://github.com/mbitsnbites),
+[Justin Brewer](https://github.com/justinbrewer), [Valentino Geron](https://github.com/valentinogeron),
+[Minun Dragonation](https://github.com/dragonation), [Omri Steiner](https://github.com/OmriSteiner),
+[Sangmoon Yi](https://github.com/jman-krafton), [Jinjiazh](https://github.com/jinjiazhang),
+[Odin Hultgren Van Der Horst](https://github.com/Miniwoffer), [Muhammad Zahalqa](https://github.com/tryfinally),
+[Nick Rivera](https://github.com/heronr), [Qi Yang](https://github.com/movebean),
+[kevin1018](https://github.com/kevin1018)
 
 [Full Changelog](https://github.com/redis/hiredis/compare/v0.14.1...HEAD)
 
-**BREAKING CHANGES between v0.14.1 and 1.0.0**:
+**BREAKING CHANGES**:
 
-* Bulk and multi-bulk lengths less than -1 or greater than `LLONG_MAX` are now
-  protocol errors. This is consistent with the RESP specification. On 32-bit
-  platforms, the upper bound is lowered to `SIZE_MAX`.
+* Bulk and multi-bulk lengths less than -1 or greater than `LLONG_MAX` are now protocol errors. This is consistent
+  with the RESP specification. On 32-bit platforms, the upper bound is lowered to `SIZE_MAX`.
 
 * `redisReplyObjectFunctions.createArray` now takes `size_t` for its length parameter.
 
 **New features:**
-- Support for RESP3 [\#697](https://github.com/redis/hiredis/pull/697), [\#805](https://github.com/redis/hiredis/pull/805), [\#819](https://github.com/redis/hiredis/pull/819), [\#841](https://github.com/redis/hiredis/pull/841) ([Yossi Gottlieb](https://github.com/yossigo), [Michael Grunder](https://github.com/michael-grunder))
-- Support for SSL connections [\#645](https://github.com/redis/hiredis/pull/645), [\#699](https://github.com/redis/hiredis/pull/699), [\#702](https://github.com/redis/hiredis/pull/702), [\#708](https://github.com/redis/hiredis/pull/708), [\#711](https://github.com/redis/hiredis/pull/711), [\#821](https://github.com/redis/hiredis/pull/821), [more](https://github.com/redis/hiredis/pulls?q=is%3Apr+is%3Amerged+SSL) ([Mark Nunberg](https://github.com/mnunberg), [Yossi Gottlieb](https://github.com/yossigo))
-- Run-time allocator injection ([Michael Grunder](https://github.com/michael-grunder))
-- Support for Windows ([Marcus Geelnard](https://www.bitsnbites.eu/author/m/))
+- Support for RESP3
+  [\#697](https://github.com/redis/hiredis/pull/697),
+  [\#805](https://github.com/redis/hiredis/pull/805),
+  [\#819](https://github.com/redis/hiredis/pull/819),
+  [\#841](https://github.com/redis/hiredis/pull/841)
+  ([Yossi Gottlieb](https://github.com/yossigo), [Michael Grunder](https://github.com/michael-grunder))
+- Support for SSL connections
+  [\#645](https://github.com/redis/hiredis/pull/645),
+  [\#699](https://github.com/redis/hiredis/pull/699),
+  [\#702](https://github.com/redis/hiredis/pull/702),
+  [\#708](https://github.com/redis/hiredis/pull/708),
+  [\#711](https://github.com/redis/hiredis/pull/711),
+  [\#821](https://github.com/redis/hiredis/pull/821),
+  [more](https://github.com/redis/hiredis/pulls?q=is%3Apr+is%3Amerged+SSL)
+  ([Mark Nunberg](https://github.com/mnunberg), [Yossi Gottlieb](https://github.com/yossigo))
+- Run-time allocator injection
+  [\#800](https://github.com/redis/hiredis/pull/800)
+  ([Michael Grunder](https://github.com/michael-grunder))
+- Improved Windows support (including MinGW and Windows CI)
+  [\#652](https://github.com/redis/hiredis/pull/652),
+  [\#663](https://github.com/redis/hiredis/pull/663)
+  ([Marcus Geelnard](https://www.bitsnbites.eu/author/m/))
 
-**Fixed bugs:**
-- An integer overflow bug in `sdsrange` caused by Incorrect types in send/recv can result in hangs with large pipelined send buffers [\#827](https://github.com/redis/hiredis/issues/827)
+**Closed issues (that involved code changes):**
+
 - Makefile does not install TLS libraries  [\#809](https://github.com/redis/hiredis/issues/809)
+- redisConnectWithOptions should not set command timeout [\#722](https://github.com/redis/hiredis/issues/722), [\#829](https://github.com/redis/hiredis/pull/829) ([valentinogeron](https://github.com/valentinogeron))
+- Fix integer overflow in `sdsrange` [\#827](https://github.com/redis/hiredis/issues/827)
 - INFO & CLUSTER commands failed when using RESP3 [\#802](https://github.com/redis/hiredis/issues/802)
-- timeout option in redisConnectWithOptions should be on the connect op… [\#829](https://github.com/redis/hiredis/pull/829) ([valentinogeron](https://github.com/valentinogeron))
-
-**Closed issues (excluding issues with no code changes):**
-
-- Failed to build package hiredis ssl on windows\* [\#842](https://github.com/redis/hiredis/issues/842)
-- Windows compatibility patches [\#838](https://github.com/redis/hiredis/issues/838)
-- hiredis with libevent， build in vs2019， SIGPIPE undefined,  what can I do? [\#831](https://github.com/redis/hiredis/issues/831)
+- Windows compatibility patches [\#687](https://github.com/redis/hiredis/issues/687), [\#838](https://github.com/redis/hiredis/issues/838), [\#842](https://github.com/redis/hiredis/issues/842)
 - RESP3 PUSH messages incorrectly use pending callback [\#825](https://github.com/redis/hiredis/issues/825)
 - Asynchronous PSUBSCRIBE command fails when using RESP3 [\#815](https://github.com/redis/hiredis/issues/815)
-- New proposed SSL API [\#813](https://github.com/redis/hiredis/issues/813)
-- Support for TLS in non-blocking connections [\#811](https://github.com/redis/hiredis/issues/811)
-- Wrapping OpenSSL global state initialisation? [\#804](https://github.com/redis/hiredis/issues/804)
+- New SSL API [\#804](https://github.com/redis/hiredis/issues/804), [\#813](https://github.com/redis/hiredis/issues/813)
 - Hard-coded limit of nested reply depth [\#794](https://github.com/redis/hiredis/issues/794)
-- setsockopt\(TCP\_NODELAY\) in Windows [\#690](https://github.com/redis/hiredis/issues/690), [\#779](https://github.com/redis/hiredis/issues/779), [\#785](https://github.com/redis/hiredis/issues/785),
-- Did you forget to add scheduleTimer with libev?  [\#778](https://github.com/redis/hiredis/issues/778), [\#795](https://github.com/redis/hiredis/pull/795)
+- Fix TCP_NODELAY in Windows/OSX [\#679](https://github.com/redis/hiredis/issues/679), [\#690](https://github.com/redis/hiredis/issues/690), [\#779](https://github.com/redis/hiredis/issues/779), [\#785](https://github.com/redis/hiredis/issues/785),
+- Added timers to libev adapter.  [\#778](https://github.com/redis/hiredis/issues/778), [\#795](https://github.com/redis/hiredis/pull/795)
 - Initialization discards const qualifier [\#777](https://github.com/redis/hiredis/issues/777)
 - \[BUG\]\[MinGW64\] Error setting socket timeout  [\#775](https://github.com/redis/hiredis/issues/775)
 - undefined reference to hi_malloc [\#769](https://github.com/redis/hiredis/issues/769)
 - hiredis pkg-config file incorrectly ignores multiarch libdir spec'n [\#767](https://github.com/redis/hiredis/issues/767)
 - Don't use -G to build shared object on Solaris [\#757](https://github.com/redis/hiredis/issues/757)
-- Synchronous Redis commands - timeout handling [\#749](https://github.com/redis/hiredis/issues/749)
 - error when make USE\_SSL=1 [\#748](https://github.com/redis/hiredis/issues/748)
-- BRPOP... 0 \(and similar\) now timeout after connection timeout rather than block [\#722](https://github.com/redis/hiredis/issues/722)
-- Cannot generate .lib file in vs2019 [\#687](https://github.com/redis/hiredis/issues/687)
-- redisSetTcpNoDelay  on windows  mac error  [\#679](https://github.com/redis/hiredis/issues/679)
 - Allow to change SSL Mode [\#646](https://github.com/redis/hiredis/issues/646)
 - hiredis/adapters/libevent.h memleak [\#618](https://github.com/redis/hiredis/issues/618)
 - redisLibuvPoll crash when server closes the connetion [\#545](https://github.com/redis/hiredis/issues/545)
@@ -309,4 +329,3 @@ The parser, standalone since v0.12.0, can now be compiled on Windows
 ### 0.10.0
 
 * See commit log.
-
