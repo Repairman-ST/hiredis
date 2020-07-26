@@ -17,7 +17,7 @@ _A big thanks to everyone who helped with this release.  The following list incl
 
 **BREAKING CHANGES**:
 
-* `redisOptions` now has two timeout fields.  One for connecting, and one for commands.  If you're presently using `options->timeout` you will need to change it to `options->command_timeout`. (e.g. [like so](https://github.com/redis/hiredis/commit/38b5ae543f5c99eb4ccabbe277770fc6bc81226f#diff-2acb3a139f82398aeb3a03f78497fd03L50]))
+* `redisOptions` now has two timeout fields.  One for connecting, and one for commands.  If you're presently using `options->timeout` you will need to change it to use `options->connect_timeout`. (See [example](https://github.com/redis/hiredis/commit/38b5ae543f5c99eb4ccabbe277770fc6bc81226f#diff-86ba39d37aa829c8c82624cce4f049fbL36))
 
 * Bulk and multi-bulk lengths less than -1 or greater than `LLONG_MAX` are now protocol errors. This is consistent
   with the RESP specification. On 32-bit platforms, the upper bound is lowered to `SIZE_MAX`.
